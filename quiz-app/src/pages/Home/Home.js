@@ -10,7 +10,6 @@ export const Home = () => {
         (async () => {
             try{
                  const {data : {data}} = await axios.get("https://quizzyapp-e896bfaca54b.herokuapp.com/categories")
-                 console.log(data);
                  setcategories(data);
             }
             catch(error){
@@ -18,12 +17,13 @@ export const Home = () => {
             }
         })()
     },[])
+    console.log(categories)
     return (
         <Fragment>
             <Navbar/>
             <main className="main d-flex wrap gap-md align-center justify-center">
                 {
-                   categories.map(category => <QuizCard category={category} key={category.id}/>)
+                   categories.map(category => <QuizCard quizCategory={category} key={category.id}/>)
                 }
             </main>
         </Fragment>
