@@ -1,20 +1,24 @@
 import "./QuizCard.css";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context";    
+import { useAuth,useQuiz } from "../../context/index";    
 
 export const QuizCard = ({quizCategory}) => {
-    
+    console.log(quizCategory);
+
           
     const {image,title,description,category} = quizCategory;
-    const {token,authDispatch} = useAuth();
+    const token = localStorage.getItem("token")
+    const {quizDispatch} = useQuiz();
+  
     const navigate = useNavigate();
 
     const handlePlayNowClick = () => {
         if(token){
-            authDispatch({
+            quizDispatch({
                 type: "CATEGORY",
                 payload: category
             });
+            localStorage.setItem("category", category);
             navigate("/quiz");
         }else{
             navigate("/auth/login");

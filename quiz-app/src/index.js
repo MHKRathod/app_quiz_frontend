@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import {BrowserRouter} from "react-router-dom";
-import { AuthProvider } from './context/index';
+import { AuthProvider,QuizProvider } from './context/index';
 import App from './App';
 
 
@@ -10,7 +10,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
   <AuthProvider>
-  <App />
+    <QuizProvider>
+      <App />
+    </QuizProvider>
   </AuthProvider>
   </BrowserRouter>
 );

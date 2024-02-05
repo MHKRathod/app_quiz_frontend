@@ -6,8 +6,7 @@ const initialState = {
 
         username: "",
         password: "",
-        token: "",
-        quizCategory: "",
+        token: ""
     }
 
 const AuthContext = createContext();
@@ -25,9 +24,9 @@ const AuthContext = createContext();
     },[])
    
 
-    const[{username,password,token,quizCategory},authDispatch] = useReducer(authReducer,initialState)
+    const[{username,password,token},authDispatch] = useReducer(authReducer,initialState)
     return(
-        <AuthContext.Provider value={{username,password,token,quizCategory,authDispatch}}>
+        <AuthContext.Provider value={{username,password,token,authDispatch}}>
             {children}
         </AuthContext.Provider>
     )

@@ -1,35 +1,64 @@
 import {Link} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useQuiz } from "../../context/index";
+import { Fragment } from "react";  
 
-export const Navbar = () => {
+export const Navbar = ({route}) => {
 
      const token = localStorage.getItem("token");
      const navigate = useNavigate();
+     const { quizDispatch } = useQuiz();
+
      const handleAuthClick = () => {
             if(token){
                 localStorage.clear();
+                quizDispatch({
+                    type: "QUIT"
+                })
             }
             else{
-                navigate("/auth/login");
+                navigate("/");
             }
         }
+
+     const handleEndGameClick = () => {
+        quizDispatch ({
+            type: "QUIT"
+        })
+     }
+
     return (
         <header className="heading d-flex grow-shrink-basis align-center">
         <div className="heading-title-icon d-flex grow-shrink-basis align-center">
             <img className="icon mr-1" src="/assets/image.png" alt="lightbul"/>
             <h1 className="heading-title">
-                <Link to="/" className="link" >quiz app</Link>
+                {
+                    route === "home" || route === "login" ? <Link to="/" className="link" >quiz app</Link> : "Quizify"
+                }    
             </h1>
         </div>
         <nav className="navigation">
             <ul className="list-non-bullet">
-                <li className="list-item-inline">
-                    <Link to="/" className="link cursor">Home</Link>
-                </li>
-                
-                <li className="list-item-inline">
-                    <Link to="/auth/login" className="link cursor" onClick={handleAuthClick}>{token ? "Logout" : "Login"}</Link>
-                </li>
+                {
+                    route === "home" && (
+                        <li className="list-item-inline">
+                        <Link to="/" className="link cursor">Home</Link>
+                    </li>
+                    
+                    )
+                }
+                {
+                    route === "result" && (
+                        <Fragment>
+                                <li className="list-item-inline">
+                                    <Link to="/" className="link cursor" onClick={handleEndGameClick}>Home</Link>
+                                </li>
+                                <li className="list-item-inline">
+                                    <span className="link cursor" onClick={handleAuthClick}>Logout</span>
+                                </li>
+                        </Fragment>
+                    )
+                }
             </ul>
         </nav>
     </header>
